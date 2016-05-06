@@ -1,3 +1,6 @@
+// https://hnryjms.github.io/2014/04/authentication/
+// http://passportjs.org/docs
+
 var express = require('express');
 var passport = require('passport');
 var Account = require('../models/account');
