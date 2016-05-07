@@ -8,4 +8,8 @@ block content
       a(href="/register") Register
     if (user)
       p You are currently logged in as #{user.username}
+      a(href="/createpoll") Create a new poll
+      br
       a(href="/logout") Logout
+    br
+    h3 Current polls available: #{docs} !     

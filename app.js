@@ -45,7 +45,8 @@ passport.serializeUser(Account.serializeUser());
 passport.deserializeUser(Account.deserializeUser());
 
 // mongoose
-mongoose.connect('mongodb://wastedige:salamsalam@ds015962.mlab.com:15962/heroku_trdp8jcm');
+var db = mongoose.connect('mongodb://wastedige:salamsalam@ds015962.mlab.com:15962/heroku_trdp8jcm');
+app.set('db', db)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -77,6 +78,7 @@ app.use(function(err, req, res, next) {
         error: {}
     });
 });
+
 
 
 module.exports = app;
