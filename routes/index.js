@@ -38,7 +38,8 @@ router.post('/createpoll/upload', function(req, res) {
       name: req.body.name,
       items: temp_item_array
     })
-
+    // https://scalegrid.io/blog/getting-started-with-mongodb-and-mongoose/
+    // https://alexanderzeitler.com/articles/mongoose-referencing-schema-in-properties-and-arrays/
     newPoll.save(function(err, data){
       if (err) console.log(err);
       else console.log('Saved ', data );
@@ -49,8 +50,8 @@ router.get('/poll/:id', function(req, res){
   //console.log('poll/id')
   var id = req.params.id;
   Poll.find({_id : id}, function (err, data) {
-      console.log("POLL:" , JSON.stringify(data))
-      res.render('chart', { user : req.user, docs : data });
+      console.log("POLL:" , JSON.stringify(data[0]))
+      res.render('chart', { user : req.user, docs : data[0] });
   });
 })
 
