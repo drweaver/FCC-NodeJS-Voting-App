@@ -15,9 +15,6 @@ router.get('/', function (req, res) {
         console.log(JSON.stringify(data))
         res.render('index', { user : req.user, docs : data });
     });
-
-
-
 });
 
 router.get('/register', function(req, res) {
@@ -47,6 +44,15 @@ router.post('/createpoll/upload', function(req, res) {
       else console.log('Saved ', data );
     })
 });
+
+router.get('/poll/:id', function(req, res){
+  //console.log('poll/id')
+  var id = req.params.id;
+  Poll.find({_id : id}, function (err, data) {
+      console.log("POLL:" , JSON.stringify(data))
+      res.render('chart', { user : req.user, docs : data });
+  });
+})
 
 
 router.post('/register', function(req, res, next) {
