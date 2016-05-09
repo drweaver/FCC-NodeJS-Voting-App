@@ -55,6 +55,32 @@ router.get('/poll/:id', function(req, res){
   });
 })
 
+router.post('/poll/:id/newvote', function(req, res){
+  console.log("vote:" , req.body);
+  var id = req.params.id;
+  var voteid = req.body.voteid;
+  console.log("voteid:" , voteid);
+  Poll.findOneAndUpdate(
+      { "_id": id, "items._id": voteid },
+      {
+          "$inc": {
+              "items.$.votes": 1 // http://stackoverflow.com/questions/26156687/mongoose-find-update-subdocument
+          }
+      },
+      { update: true },
+      function(err, data) {
+        if (err) console.log(err);
+        else console.log('Saved ', data );
+      }
+  );
+
+  Poll.find({_id : id}, function (err, data) {
+      // console.log("CHANGE:" , JSON.stringify(data[0]))
+      // res.render('chart', { user : req.user, docs : data[0] });
+
+  });
+})
+
 
 router.post('/register', function(req, res, next) {
     Account.register(new Account({ username : req.body.username }), req.body.password, function(err, account) {

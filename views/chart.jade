@@ -47,12 +47,13 @@ html
     // Vote block
     p #{docs.name}
     
-    form(role='form', action='/poll/#{docs._id}/newvote', enctype='multipart/form-data', method='post')
+    form(role='form', action='/poll/#{docs._id}/newvote', enctype="application/json", method='post')
       span Vote for your desired option: 
-      for d in docs.items
-        br
-        input(type='radio', name='sendto', value=d.item)         
-        | #{d.item}
+      .form-group
+        for d in docs.items
+          br
+          input(type='radio', name='voteid', value=d._id)         
+          | #{d.item}
       br          
       button(name='submit', type='submit') Send    
     
