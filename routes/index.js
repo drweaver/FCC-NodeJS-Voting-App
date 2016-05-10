@@ -8,15 +8,6 @@ var Poll = require('../models/poll');
 var mongoose = require('mongoose');
 var router = express.Router();
 
-router.get('/', function (req, res) {
-
-    // var db = req.app.get('db') // http://stackoverflow.com/questions/20712712/how-to-pass-variable-from-app-js-to-routes-index-js
-    Poll.find({}, function (err, data) {
-        console.log(JSON.stringify(data))
-        res.render('index', { user : req.user, docs : data });
-    });
-});
-
 router.get('/register', function(req, res) {
     res.render('register', { });
 });
@@ -41,8 +32,10 @@ router.post('/createpoll/upload', function(req, res) {
     // https://scalegrid.io/blog/getting-started-with-mongodb-and-mongoose/
     // https://alexanderzeitler.com/articles/mongoose-referencing-schema-in-properties-and-arrays/
     newPoll.save(function(err, data){
-      if (err) console.log(err);
-      else console.log('Saved ', data );
+      if (err)
+        console.log(err);
+      else
+        res.redirect('/');
     })
 });
 
@@ -73,12 +66,7 @@ router.post('/poll/:id/newvote', function(req, res){
         else console.log('Saved ', data );
       }
   );
-
-  Poll.find({_id : id}, function (err, data) {
-      // console.log("CHANGE:" , JSON.stringify(data[0]))
-      // res.render('chart', { user : req.user, docs : data[0] });
-
-  });
+  res.redirect('/');
 })
 
 
@@ -127,11 +115,15 @@ router.get('/ping', function(req, res){
     res.status(200).send("pong!");
 });
 
-// http://stackoverflow.com/questions/5794834/how-to-access-a-preexisting-collection-with-mongoose
-function findInCollection (collec, query, callback) {
-    mongoose.connection.db.collection(collec, function (err, collection) {
-    collection.find(query).toArray(callback);
+// catch all!
+router.get('*', function (req, res) {
+
+    // var db = req.app.get('db') // http://stackoverflow.com/questions/20712712/how-to-pass-variable-from-app-js-to-routes-index-js
+    Poll.find({}, function (err, data) {
+        console.log(JSON.stringify(data))
+        res.render('index', { user : req.user, docs : data });
     });
-}
+});
+
 
 module.exports = router;
