@@ -2,6 +2,8 @@ html
   head
     // Load the AJAX API
     script(type='text/javascript', src='https://www.gstatic.com/charts/loader.js')
+    link(href='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css', rel='stylesheet', media='screen')
+    link(rel='stylesheet', href='/stylesheets/style.css')      
     script(type='text/javascript').
       var json = '!{JSON.stringify(docs)}'
       var xobj = JSON.parse(json)
@@ -29,28 +31,39 @@ html
         data.addRows(item_rows)
         // Set chart options
         var options = {'title': xobj.name ,
-        'width': 500,
-        'height':400};
+        'width': 700,
+        'height': 500};
         // Instantiate and draw our chart, passing in some options.
         var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
         chart.draw(data, options);
       }
   body
-    // Div that will hold the pie chart
-    #chart_div
-    // Vote block
-    h2 #{docs.name} 
-    if (user) && (docs.owner = user._id)
-      a(href= "/poll/#{docs._id}/remove") Remove this poll     
-    form(role='form', action='/poll/#{docs._id}/newvote', enctype="application/json", method='post')
-      span Vote: 
-      .form-group
-        for d in docs.items
-          br
-          input(type='radio', name='voteid', value=d._id)         
-          | #{d.item}
-      br          
-      button(name='submit', type='submit') Send    
+    .row
+      .col-md-7
+        .well 
+          h1 #{docs.name} 
+          if (user) && (docs.owner = user._id)
+            a.btn.btn-danger(href= "/poll/#{docs._id}/remove") Remove this poll 
+        .well   
+          form(role='form', action='/poll/#{docs._id}/newvote', enctype="application/json", method='post')
+    
+            span.h4 Vote: 
+            .form-group.h4
+              for d in docs.items
+                br
+                input(type='radio', name="voteid", value=d._id)         
+                | #{d.item}
+            br          
+            button.btn(name='submit', type='submit') Vote!
+        
+        a.btn.btn-primary(href= "/") Main Menu
+                   
+      .col-md-5
+        // Div that will hold the pie chart
+        #chart_div
+
+
+ 
     
 
     
