@@ -13,7 +13,7 @@ router.get('/register', function(req, res) {
 });
 
 router.get('/createpoll', function(req, res) {
-    res.render('newpoll', { });
+    res.render('newpoll', { user: req.user });
 });
 
 router.post('/createpoll/upload', function(req, res) {
@@ -25,7 +25,8 @@ router.post('/createpoll/upload', function(req, res) {
     console.log(temp_item_array)
 
     var newPoll = new Poll({
-      owner: req.user,
+      // req.user contains single-quotes in its JSON which causes formatting issues
+      owner: req.user._id,
       name: req.body.name,
       items: temp_item_array
     })
@@ -34,8 +35,11 @@ router.post('/createpoll/upload', function(req, res) {
     newPoll.save(function(err, data){
       if (err)
         console.log(err);
-      else
+      else {
+        console.log(data, null, 4);
         res.redirect('/');
+      }
+
     })
 });
 
@@ -43,9 +47,21 @@ router.get('/poll/:id', function(req, res){
   //console.log('poll/id')
   var id = req.params.id;
   Poll.find({_id : id}, function (err, data) {
-      console.log("POLL:" , JSON.stringify(data[0]))
-      res.render('chart', { user : req.user, docs : data[0] });
+      console.log("POLL:" , JSON.stringify(data, null, 4))
+      res.render('chart', { user : req.user, docs : data[0] })
   });
+})
+
+router.get('/poll/:id/remove', function(req, res){
+  //console.log('poll/id')
+  var id = req.params.id;
+  Poll.remove({_id : id}, function (err, data) {
+    if (err)
+      console.log(err);
+    else
+      req.flash('info', 'Poll removed!')
+  });
+  res.redirect('/');
 })
 
 router.post('/poll/:id/newvote', function(req, res){
@@ -68,7 +84,6 @@ router.post('/poll/:id/newvote', function(req, res){
           req.flash('info', 'Your voting has been saved!')
       }
   );
-
   res.redirect('/');
 })
 
@@ -123,7 +138,7 @@ router.get('*', function (req, res) {
 
     // var db = req.app.get('db') // http://stackoverflow.com/questions/20712712/how-to-pass-variable-from-app-js-to-routes-index-js
     Poll.find({}, function (err, data) {
-        console.log(JSON.stringify(data))
+        console.log(JSON.stringify(data, null, 4))
         res.render('index', { user : req.user, docs : data, error: req.flash('info') });
     });
 });

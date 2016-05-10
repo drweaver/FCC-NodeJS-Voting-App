@@ -3,8 +3,8 @@ html
     // Load the AJAX API
     script(type='text/javascript', src='https://www.gstatic.com/charts/loader.js')
     script(type='text/javascript').
-      var json = '!{JSON.stringify(docs)}';
-      var xobj = JSON.parse(json);      
+      var json = '!{JSON.stringify(docs)}'
+      var xobj = JSON.parse(json)
       var item_rows = [];
       for ( i = 0 ; i < xobj.items.length ; i++ ) {
         console.log(xobj.items[i].item);
@@ -22,27 +22,28 @@ html
       // instantiates the pie chart, passes in the data and
       // draws it.
       function drawChart() {
-      // Create the data table.
-      var data = new google.visualization.DataTable();
-      data.addColumn('string', 'Topping');
-      data.addColumn('number', 'Slices');
-      data.addRows(item_rows)
-      // Set chart options
-      var options = {'title': xobj.name ,
-      'width': 500,
-      'height':400};
-      // Instantiate and draw our chart, passing in some options.
-      var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-      chart.draw(data, options);
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Topping');
+        data.addColumn('number', 'Slices');
+        data.addRows(item_rows)
+        // Set chart options
+        var options = {'title': xobj.name ,
+        'width': 500,
+        'height':400};
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
       }
   body
     // Div that will hold the pie chart
     #chart_div
     // Vote block
-    p #{docs.name}
-    
+    h2 #{docs.name} 
+    if (user) && (docs.owner = user._id)
+      a(href= "/poll/#{docs._id}/remove") Remove this poll     
     form(role='form', action='/poll/#{docs._id}/newvote', enctype="application/json", method='post')
-      span Vote for your desired option: 
+      span Vote: 
       .form-group
         for d in docs.items
           br
@@ -53,4 +54,4 @@ html
     
 
     
-      
+    
