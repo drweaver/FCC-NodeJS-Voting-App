@@ -62,10 +62,13 @@ router.post('/poll/:id/newvote', function(req, res){
       },
       { update: true },
       function(err, data) {
-        if (err) console.log(err);
-        else console.log('Saved ', data );
+        if (err)
+          req.flash('info', 'Error: ' + err)
+        else
+          req.flash('info', 'Your voting has been saved!')
       }
   );
+
   res.redirect('/');
 })
 
@@ -121,7 +124,7 @@ router.get('*', function (req, res) {
     // var db = req.app.get('db') // http://stackoverflow.com/questions/20712712/how-to-pass-variable-from-app-js-to-routes-index-js
     Poll.find({}, function (err, data) {
         console.log(JSON.stringify(data))
-        res.render('index', { user : req.user, docs : data });
+        res.render('index', { user : req.user, docs : data, error: req.flash('info') });
     });
 });
 
