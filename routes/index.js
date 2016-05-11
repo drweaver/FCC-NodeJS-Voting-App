@@ -52,6 +52,13 @@ router.get('/poll/:id', function(req, res){
   });
 })
 
+router.get('/aggregatepolls/', function(req, res){
+  Poll.find({ owner : req.user }, function(err, data){
+      console.log("POLL:" , JSON.stringify(data, null, 4))
+      res.render('aggchart', { user : req.user, docs : data })
+  })
+})
+
 router.get('/poll/:id/remove', function(req, res){
   //console.log('poll/id')
   var id = req.params.id;

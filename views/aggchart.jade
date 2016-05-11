@@ -1,0 +1,58 @@
+html
+  head
+    // Load the AJAX API
+    script(type='text/javascript', src='https://www.gstatic.com/charts/loader.js')
+    link(href='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css', rel='stylesheet', media='screen')
+    link(rel='stylesheet', href='/stylesheets/style.css')      
+    script(type='text/javascript').
+      google.charts.load('current', {'packages':['corechart']});         
+      var json = '!{JSON.stringify(docs)}'
+      var itemrows;
+      var chartcounter = 0;
+      var allitemrows = []
+      var pollnames = []
+      var xobj = JSON.parse(json)
+      for ( j = 0 ; j < xobj.length ; j++ ) {
+        itemrows = new Array();
+        pollnames.push(xobj[j].name)
+        for ( i = 0 ; i < xobj[j].items.length ; i++ ) {          
+          itemrows.push(
+            [ xobj[j].items[i].item, xobj[j].items[i].votes ]  // push each item and vote for poll J    
+          )               
+        }
+        allitemrows.push(itemrows) // push each poll into allitemrows
+        google.charts.setOnLoadCallback(drawChart)        
+      }      
+      function drawChart() {                
+        // Create the data table.        
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Topping');
+        data.addColumn('number', 'Slices');
+        data.addRows(allitemrows[chartcounter])
+        // Set chart options
+        var options = {'title': pollnames[chartcounter] ,
+        'width': 700,
+        'height': 500};
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.PieChart(document.getElementById('chart_div' + chartcounter));
+        chart.draw(data, options);
+        chartcounter = chartcounter + 1;
+      }    
+  body
+    h2 Poll Aggregates
+    .well
+      #chart_div0
+      #chart_div1
+      #chart_div2
+      #chart_div3
+      #chart_div4
+      #chart_div5
+      #chart_div6
+      #chart_div7
+    a.btn.btn-primary(href= "/") Main Menu
+
+ 
+    
+
+    
+    

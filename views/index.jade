@@ -9,14 +9,15 @@ block content
       a.btn(href="/register") Register
     if (user)
       p You are currently logged in as #{user.username}
-      a(href="/createpoll") Create a new poll
-      br
-      a(href="/logout") Logout
-    br
-    h3 Current polls available: 
-    //- #{docs} !     
-    for doc in docs
-      * 
-      a(href= "/poll/#{doc._id}") #{doc.name} 
-      br
+      a.btn.btn-primary(href="/createpoll") Create a new poll
+      p
+      a.btn.btn-primary(href="/logout") Logout
+    p
+    .well
+      h4 Current polls available: 
+      //- #{docs} !     
+      for doc in docs
+        * 
+        a(href= "/poll/#{doc._id}") #{doc.name} 
+        br
           
