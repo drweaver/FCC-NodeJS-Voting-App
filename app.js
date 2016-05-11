@@ -45,7 +45,8 @@ passport.serializeUser(Account.serializeUser());
 passport.deserializeUser(Account.deserializeUser());
 
 // mongoose
-console.log(process.env.DB)
+// set a config var locally: set DB=mongodb://...
+// set a heroku config var: heroku config:set DB=mongodb://...
 var db = mongoose.connect(process.env.DB);
 app.set('db', db)
 

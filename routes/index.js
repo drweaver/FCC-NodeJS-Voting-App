@@ -89,7 +89,7 @@ router.post('/poll/:id/newitem', function(req, res){
               console.log(data)
           }
       );
-      res.redirect('/');
+      res.redirect('/poll/' + id);
   });
 })
 
@@ -113,7 +113,7 @@ router.post('/poll/:id/newvote', function(req, res){
           req.flash('info', 'Your voting has been saved!')
       }
   );
-  res.redirect('/');
+  res.redirect('/poll/' + id);
 })
 
 
