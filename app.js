@@ -45,7 +45,7 @@ passport.serializeUser(Account.serializeUser());
 passport.deserializeUser(Account.deserializeUser());
 
 // mongoose
-var db = mongoose.connect('mongodb://wastedige:salamsalam@ds015962.mlab.com:15962/heroku_trdp8jcm');
+var db = mongoose.connect(process.env.MONGODB_URL);
 app.set('db', db)
 
 // catch 404 and forward to error handler
