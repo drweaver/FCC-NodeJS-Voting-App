@@ -4,22 +4,25 @@ extends layout
 block content
   .container.h4
     if (!user)          
-      a.btn(href="/login") Login
-      br
-      a.btn(href="/register") Register
+      a.btn.btn-primary(href="/login") Login
+      span      
+      a.btn.btn-primary(href="/register") Register
     if (user)
-      p You are currently logged in as #{user.username}
-      a.btn.btn-primary(href="/createpoll") Create a new poll
-      p
-      a.btn.btn-primary(href="/aggregatepolls") Poll aggregates
-      p
+      p.text-right.bg-success You are currently logged in as #{user.username}
+      a.btn.btn-default(href="/createpoll") Create a new poll
+      span
+      a.btn.btn-default(href="/aggregatepolls") Poll aggregates
+      span
       a.btn.btn-primary(href="/logout") Logout
     p
-    .well
-      h4 Current polls available: 
-      //- #{docs} !     
+    br
+    table.table
+      tr
+        th.text-center Current polls available:               
       for doc in docs
-        * 
-        a(href= "/poll/#{doc._id}") #{doc.name} 
-        br
+        tbody
+          tr       
+            td.text-center 
+              a(href= "/poll/#{doc._id}") #{doc.name} 
+        
           
