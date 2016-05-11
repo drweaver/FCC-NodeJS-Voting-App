@@ -72,7 +72,7 @@ html
       .col-md-7
         .well 
           h1 #{docs.name} 
-          if (user) && (docs.owner = user._id)
+          if (user) && (docs.owner == user._id)
             a.btn.btn-danger(href= "/poll/#{docs._id}/remove") Remove this poll
             button.btn.btn-primary.js-copy-btn(style='margin: 5px') Copy poll address to clipboard
         .well   

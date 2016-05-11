@@ -46,14 +46,14 @@ router.post('/createpoll/upload', function(req, res) {
 router.get('/poll/:id', function(req, res){
   var id = req.params.id;
   Poll.find({_id : id}, function (err, data) {
-      console.log("POLL:" , JSON.stringify(data, null, 4))
+      // console.log("POLL:" , JSON.stringify(data, null, 4))
       res.render('chart', { user : req.user, docs : data[0] })
   });
 })
 
 router.get('/aggregatepolls/', function(req, res){
   Poll.find({ owner : req.user._id }, function(err, data){
-      console.log("POLL:" , JSON.stringify(data, null, 4))
+      // console.log("POLL:" , JSON.stringify(data, null, 4))
       res.render('aggchart', { user : req.user, docs : data })
   })
 })
