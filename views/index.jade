@@ -8,12 +8,12 @@ block content
       span      
       a.btn.btn-primary(href="/register") Register
     if (user)
-      p.text-right.bg-success You are currently logged in as #{user.username}
+      p.small.text-right.bg-success(style="padding: 10px") You are currently logged in as: #{user.username}
       a.btn.btn-default(href="/createpoll") Create a new poll
       span
-      a.btn.btn-default(href="/aggregatepolls") Poll aggregates
+      a.btn.btn-default(href="/aggregatepolls")(style="margin: 5px") Poll aggregates
       span
-      a.btn.btn-primary(href="/logout") Logout
+      a.btn.btn-primary(href="/logout")(style="margin: 5px") Logout
     p
     br
     table.table
