@@ -43,7 +43,7 @@ html
         .well 
           h1 #{docs.name} 
           if (user) && (docs.owner = user._id)
-            a.btn.btn-danger(href= "/poll/#{docs._id}/remove") Remove this poll 
+            a.btn.btn-danger(href= "/poll/#{docs._id}/remove") Remove this poll            
         .well   
           form(role='form', action='/poll/#{docs._id}/newvote', enctype="application/json", method='post')
     
@@ -54,17 +54,19 @@ html
                 input(type='radio', name="voteid", value=d._id)         
                 | #{d.item}
             br          
-            button.btn(name='submit', type='submit') Vote!
-        
-        a.btn.btn-primary(href= "/") Main Menu
-                   
+            button.btn(name='submit', type='submit') Vote!                                   
       .col-md-5
         // Div that will hold the pie chart
         #chart_div
-
-
- 
-    
+    .row
+      if (user) && (docs.owner = user._id)
+        form(role='form', action='/poll/#{docs._id}/newitem', enctype="application/json", method='post')
+          span.h4 Add a new option: 
+          input(type='text', name="item")
+          span            
+          button.btn-xs.btn-warning(name='submit', type='submit') Add
+        p
+        a.btn.btn-primary(href= "/") Main Menu
 
     
     

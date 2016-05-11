@@ -1,0 +1,13 @@
+html
+  head
+    script(type='text/javascript', src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js')
+  body
+    if (user)  
+      form(role='form', enctype="application/json", action='/createpoll/upload', method='post')
+        .form-group
+          label Poll Name
+          input.name(type='text', id='name', name='name', placeholder='Poll Name')
+        .form-group
+          label Items (separated by comma)
+          input#items.items(type='text', name='items', placeholder='Items')
+        button.submit.btn(name='submit', type='submit') Send

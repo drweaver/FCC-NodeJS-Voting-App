@@ -44,7 +44,6 @@ router.post('/createpoll/upload', function(req, res) {
 });
 
 router.get('/poll/:id', function(req, res){
-  //console.log('poll/id')
   var id = req.params.id;
   Poll.find({_id : id}, function (err, data) {
       console.log("POLL:" , JSON.stringify(data, null, 4))
@@ -53,14 +52,13 @@ router.get('/poll/:id', function(req, res){
 })
 
 router.get('/aggregatepolls/', function(req, res){
-  Poll.find({ owner : req.user }, function(err, data){
+  Poll.find({ owner : req.user._id }, function(err, data){
       console.log("POLL:" , JSON.stringify(data, null, 4))
       res.render('aggchart', { user : req.user, docs : data })
   })
 })
 
 router.get('/poll/:id/remove', function(req, res){
-  //console.log('poll/id')
   var id = req.params.id;
   Poll.remove({_id : id}, function (err, data) {
     if (err)
@@ -69,6 +67,30 @@ router.get('/poll/:id/remove', function(req, res){
       req.flash('info', 'Poll removed!')
   });
   res.redirect('/');
+})
+
+router.post('/poll/:id/newitem', function(req, res){
+  var id = req.params.id;
+  var item = req.body.item;
+  console.log("newitem:" , item);
+  Poll.find({_id : id}, function (err, data) {
+      Poll.findOneAndUpdate(
+          { "_id": id },
+          {
+              "$push": {
+                  "items": { 'item' : item , votes : 0 }
+              }
+          },
+          { update: true },
+          function(err, data) {
+            if (err)
+              req.flash('info', 'Error: ' + err)
+            else
+              console.log(data)
+          }
+      );
+      res.redirect('/');
+  });
 })
 
 router.post('/poll/:id/newvote', function(req, res){
@@ -145,7 +167,7 @@ router.get('*', function (req, res) {
 
     // var db = req.app.get('db') // http://stackoverflow.com/questions/20712712/how-to-pass-variable-from-app-js-to-routes-index-js
     Poll.find({}, function (err, data) {
-        console.log(JSON.stringify(data, null, 4))
+        //console.log(JSON.stringify(data, null, 4))
         res.render('index', { user : req.user, docs : data, error: req.flash('info') });
     });
 });

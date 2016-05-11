@@ -9,11 +9,11 @@ html
       var json = '!{JSON.stringify(docs)}'
       var itemrows;
       var chartcounter = 0;
-      var allitemrows = []
-      var pollnames = []
+      var allitemrows = [] // all poll arrays are pushed to this array
+      var pollnames = [] // all poll names are kept here
       var xobj = JSON.parse(json)
       for ( j = 0 ; j < xobj.length ; j++ ) {
-        itemrows = new Array();
+        itemrows = new Array(); // temp array to gather poll data: arrays of [item, vote]
         pollnames.push(xobj[j].name)
         for ( i = 0 ; i < xobj[j].items.length ; i++ ) {          
           itemrows.push(
