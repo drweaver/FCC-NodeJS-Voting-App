@@ -3,10 +3,6 @@ extends layout
 
 block content
   .container.h4
-    if (!user)          
-      a.btn.btn-primary(href="/login") Login
-      span      
-      a.btn.btn-primary(href="/register") Register
     if (user)
       p.small.text-right.bg-success(style="padding: 10px") You are currently logged in as: #{user.username}
       a.btn.btn-default(href="/createpoll") Create a new poll

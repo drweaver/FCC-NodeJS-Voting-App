@@ -81,9 +81,10 @@ html
             span.h4 Vote: 
             .form-group.h4
               for d in docs.items
-                br
-                input(type='radio', name="voteid", value=d._id)         
-                | #{d.item}
+                .radio
+                  label
+                    input(type='radio', name="voteid", value=d._id)         
+                    | #{d.item}
             br          
             button.btn(name='submit', type='submit') Vote!                                   
       .col-md-5
