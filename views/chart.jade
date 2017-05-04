@@ -68,8 +68,9 @@ html
       }
            
   body
+   .container
     .row
-      .col-md-7
+      .col-md-7.col-sm-12.col-xs-12
         .well 
           h1 #{docs.name} 
           if (user) && (docs.owner == user._id)
@@ -78,16 +79,15 @@ html
         .well   
           form(role='form', action='/poll/#{docs._id}/newvote', enctype="application/json", method='post')
     
-            span.h4 Vote: 
-            .form-group.h4
-              for d in docs.items
-                .radio
-                  label
-                    input(type='radio', name="voteid", value=d._id)         
-                    | #{d.item}
+            h4 Choose your answer: 
+            for d in docs.items
+              div.radio
+                label.h2
+                  input(type='radio', name="voteid", value=d._id)         
+                  | #{d.item}
             br          
-            button.btn(name='submit', type='submit') Vote!                                   
-      .col-md-5
+            button.btn-lg.btn(name='submit', type='submit') Vote!                                   
+      .col-md-5.col-sm-12.col-xs-12
         // Div that will hold the pie chart
         #chart_div
     .row
