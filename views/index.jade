@@ -5,9 +5,9 @@ block content
   .container.h4
     if (user)
       p.small.text-right.bg-success(style="padding: 10px") You are currently logged in as: #{user.username}
-      a.btn.btn-default(href="/createpoll") Create a new poll
+      a.btn.btn-default(href="/createpoll") Create a new question
       span
-      a.btn.btn-default(href="/aggregatepolls")(style="margin: 5px") Poll aggregates
+      a.btn.btn-default(href="/aggregatepolls")(style="margin: 5px") Quiz Results
       span
       a.btn.btn-primary(href="/logout")(style="margin: 5px") Logout
     p

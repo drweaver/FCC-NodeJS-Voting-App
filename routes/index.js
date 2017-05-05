@@ -52,7 +52,7 @@ router.get('/poll/:id', function(req, res){
 })
 
 router.get('/aggregatepolls/', function(req, res){
-  Poll.find({ owner : req.user._id }, function(err, data){
+  Poll.find({  }, function(err, data){
       // console.log("POLL:" , JSON.stringify(data, null, 4))
       res.render('aggchart', { user : req.user, docs : data })
   })
