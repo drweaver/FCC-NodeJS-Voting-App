@@ -5,7 +5,7 @@ html
     link(href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css', rel='stylesheet', media='screen')
     link(rel='stylesheet', href='/stylesheets/style.css')      
     script(type='text/javascript').
-      var json = '!{JSON.stringify(docs)}'
+      var json = '!{JSON.stringify(docs).replace(/'/g, "\\'")}'
       var xobj = JSON.parse(json)
       var item_rows = [];
       for ( i = 0 ; i < xobj.items.length ; i++ ) {

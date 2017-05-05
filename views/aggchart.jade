@@ -6,7 +6,7 @@ html
     link(rel='stylesheet', href='/stylesheets/style.css')      
     script(type='text/javascript').
       google.charts.load('current', {'packages':['corechart']});         
-      var json = '!{JSON.stringify(docs)}'
+      var json = '!{JSON.stringify(docs).replace(/'/g, "\\'")}'
       var itemrows;
       var chartcounter = 0;
       var allitemrows = [] // all poll arrays are pushed to this array
