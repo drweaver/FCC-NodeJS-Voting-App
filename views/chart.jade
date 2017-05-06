@@ -73,9 +73,11 @@ html
       .col-md-7.col-sm-12.col-xs-12
         .well 
           h1 #{docs.name} 
-          if (user) && (docs.owner == user._id)
-            a.btn.btn-danger(href= "/poll/#{docs._id}/remove") Remove this poll
-            button.btn.btn-primary.js-copy-btn(style='margin: 5px') Copy poll address to clipboard
+          if (user) 
+            p
+              a.btn.btn-danger(href= "/poll/#{docs._id}/remove" role="button") Delete this question
+              span
+              a.btn.btn-warning(href="/poll/#{docs._id}/reset" role="button") Reset votes
         .well   
           form(role='form', action='/poll/#{docs._id}/newvote', enctype="application/json", method='post')
     

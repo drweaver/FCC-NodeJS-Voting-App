@@ -20,5 +20,7 @@ block content
           tr       
             td.text-center 
               a(href= "/poll/#{doc._id}") #{doc.name} 
+    if (user)
+      a.btn.btn-warning(href="/resetall") Reset All Votes
         
           

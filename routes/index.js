@@ -7,6 +7,7 @@ var Account = require('../models/account');
 var Poll = require('../models/poll');
 var mongoose = require('mongoose');
 var router = express.Router();
+var _ = require('underscore');
 
 router.get('/register', function(req, res) {
     res.render('register', { });
@@ -68,6 +69,58 @@ router.get('/poll/:id/remove', function(req, res){
   });
   res.redirect('/');
 })
+
+router.get('/poll/:id/reset', function(req, res){
+  var id = req.params.id;
+  console.log("reset:" , id);
+  Poll.findOne({_id : id}, function (err, data) {
+    console.log(data);
+    
+    for( var i=0; i<data.items.length; i++ ) {
+      Poll.update(
+          { "_id": id, "items._id": data.items[i]._id },
+          {
+              "$set": {
+                  "items.$.votes": 0
+              }
+          },
+          function(err, errdata) {
+            if (err)
+              req.flash('info', 'Error: ' + err)
+            else
+              console.log(errdata)
+              req.flash('info', 'Votes reset');
+          }
+      );
+    }
+    res.redirect('/poll/' + id);
+    
+  });
+})
+
+router.get('/resetall', function(req, res){
+  console.log("resetall");
+  Poll.find({}, function (err, data) {
+    //console.log(data);
+    _.each(data, poll => {
+      //console.log(poll);
+      _.each(poll.items, item => {
+        //console.log(item);
+        Poll.update(
+          { "_id": poll._id, "items._id": item._id },
+          { "$set": { "items.$.votes": 0 } },
+          err => {
+            if( err ) 
+              req.flash('info', 'Error: '+err);
+            else 
+              console.log("reset successful for " + item._id);
+          });
+      });
+    });
+    
+  });
+  res.redirect('/');
+});
 
 router.post('/poll/:id/newitem', function(req, res){
   var id = req.params.id;
